@@ -1,4 +1,10 @@
-console.log('hello world');
-const asdfaf = 'dsog';
-var na = 10;
-var a = 30;
+import express, { Request, Response } from 'express';
+const app = express();
+
+
+app.get('/', (req: Request, res: Response)=> {
+    res.send('Cortex Server is running...');
+})
+
+
+export default app;
