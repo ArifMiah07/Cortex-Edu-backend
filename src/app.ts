@@ -1,7 +1,8 @@
-import express, { Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { userRoutes } from './app/routes/user.routes';
-const app = express();
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+const app : Application = express();
 
 app.use(express.json());
 app.use(cors(
@@ -18,5 +19,6 @@ app.get('/', (req: Request, res: Response)=> {
     res.send('Cortex Server is running...');
 })
 
+app.use(globalErrorHandler);
 
 export default app;

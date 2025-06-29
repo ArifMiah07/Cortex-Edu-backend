@@ -1,42 +1,32 @@
 import { Request, Response } from 'express';
 import { userServices } from '../services/user.service';
+import catchAsync from '../utils/catchAsync';
+import sendResponse from '../utils/sendResponse';
+import httpStatus from 'http-status';
 
 // create user
-const createUser = async (req: Request, res: Response) => {
-  try {
-      console.log(req.body);
-    const result = await userServices.createUserIntoDb(req.body);
-    res.status(200).json({
-      status: true,
-      message: 'user created successfully!',
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      status: false,
-      message: error.message || 'something went wrong!',
-      error: error,
-    });
-  }
-};
+const createUser = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.body);
+  const result = await userServices.createUserIntoDb(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user is created successfully!',
+    data: result,
+  });
+});
 
 // get all user
-const getAllUsers = async (req: Request, res: Response) => {
-  try {
-    const result = await userServices.getAllUsersFromDb();
-    res.status(200).json({
-      status: true,
-      message: 'user retrieved successfully!',
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      status: false,
-      message: error.message || 'something went wrong!',
-      error: error,
-    });
-  }
-};
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.getAllUsersFromDb();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user was retrieved successfully!',
+    data: result,
+  });
+});
 
 export const userControllers = {
   createUser,
