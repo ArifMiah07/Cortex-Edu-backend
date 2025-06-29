@@ -9,4 +9,5 @@ export default {
     NODE_ENV: process.env.NODE_ENV,
     port: process.env.PORT,
     DB_UR: process.env.MONGODB_URL,  
+    SALT_ROUND: process.env.BCRYPT_SALT_ROUND,  
 }
