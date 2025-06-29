@@ -8,6 +8,7 @@ export interface ICourse {
   thumbnail: string;
   createdBy: ObjectId; // Admin who created
   isActive: boolean;
+  isDeleted?: false,
 }
 
 
@@ -37,14 +38,35 @@ const courseSchema = new Schema<ICourse>({
   createdBy: {
     type: Types.ObjectId,
     required: true,
-    ref: 'Admin',
+    ref: 'Admin',//hmm...todo
   },
   isActive: {
     type: Boolean,
     default: true,
   },
+  isDeleted:{
+    type: Boolean,
+    default: false,
+  }
 }, {
   timestamps: true,
+});
+
+// soft delete
+// filter out deleted documents
+courseSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+courseSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+courseSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
 });
 
 export const Course = model<ICourse>('Course', courseSchema);
