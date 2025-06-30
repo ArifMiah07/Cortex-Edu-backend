@@ -3,13 +3,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import config from '../config';
-import AppError from '../errors/AppError';
 
 import handleZodError from '../errors/handleZodError';
 import handleValidationError from '../errors/handleValidationError';
 import handleCastError from '../errors/handleCastError';
 import handleDuplicateError from '../errors/handleDuplicateError';
-import { TErrorSources } from '../errors/interface/error';
+import { TErrorSources } from '../errors/error';
+import AppError from '../errors/AppError';
+
 
 const globalErrorHandler = (
 
@@ -74,7 +75,6 @@ const globalErrorHandler = (
     ...(config.NODE_ENV === 'development' && { stack: err.stack }),
   });
 
-  // Ensure void return type
   return;
 };
 
