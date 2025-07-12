@@ -3,6 +3,7 @@ import { z } from 'zod';
 // Simple ObjectId regex validation (24 hex chars)
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
+// validation for data creation
 const createCourseValidationSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(100, { message: "Title too long" }),
   description: z.string().min(1, { message: "Description is required" }),
@@ -15,6 +16,7 @@ const createCourseValidationSchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
+// validation for data update
 const updateCourseValidationSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(100, { message: "Title too long" }).optional(),
   description: z.string().min(1, { message: "Description is required" }).optional(),

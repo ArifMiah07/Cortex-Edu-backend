@@ -9,9 +9,9 @@ const router = Router();
 // create course
 router.post('/create-course', requireAuth ,validateRequest(courseValidation.createCourseValidationSchema), courseController.createCourse);//admin
 // get all course
-router.get('/view-all-courses', courseController.getAllCourses);
+router.get('/all-courses', courseController.getAllCourses);
 // get a single course
-router.get('/view-single-course/:courseId', requireAuth, courseController.getSingleCourse);
+router.get('/single-course/:courseId', requireAuth, courseController.getSingleCourse);
 // update a course
 router.patch('/update-course/:courseId', requireAuth, validateRequest(courseValidation.updateCourseValidationSchema) ,courseController.updateCourse);//admin
 // delete a course
