@@ -13,7 +13,7 @@ router.get('/view-all-courses', courseController.getAllCourses);
 // get a single course
 router.get('/view-single-course/:courseId', requireAuth,courseController.getSingleCourse);
 // update a course
-router.patch('/update-course/:courseId', validateRequest(courseValidation.updateCourseValidationSchema) ,courseController.updateCourse);//admin
+router.patch('/update-course/:courseId', requireAuth, validateRequest(courseValidation.updateCourseValidationSchema) ,courseController.updateCourse);//admin
 // delete a course
 router.delete('/delete-course/:courseId',requireAuth, courseController.deleteCourse);
 

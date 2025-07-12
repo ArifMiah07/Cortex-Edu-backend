@@ -25,7 +25,7 @@ const moduleRoutes = [
     route: LectureRoutes,
   },
     {
-    path: 'progress',
+    path: '/progress',
     route: ProgressRoutes,
   },
 ];

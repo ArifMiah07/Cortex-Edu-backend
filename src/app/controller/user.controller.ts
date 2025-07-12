@@ -27,8 +27,19 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+// get all user
+const getAllAdmins = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.getAllAdminsFromDb();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin was retrieved successfully!',
+    data: result,
+  });
+});
 
 export const userControllers = {
   createUser,
   getAllUsers,
+  getAllAdmins,
 };

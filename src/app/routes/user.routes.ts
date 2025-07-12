@@ -15,5 +15,6 @@ router.post(
 );
 // get all users
 router.get('/users', requireAuth, userControllers.getAllUsers);
+router.get('/admins', requireAuth, userControllers.getAllAdmins);
 
 export const userRoutes = router;
