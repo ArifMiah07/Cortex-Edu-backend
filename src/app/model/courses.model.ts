@@ -8,6 +8,8 @@ export interface ICourse {
   thumbnail: string;
   createdBy: ObjectId; // Admin who created
   isActive: boolean;
+  isPublished?: boolean;
+  isPrivate?: boolean;
   isDeleted?: false,
 }
 
@@ -43,6 +45,14 @@ const courseSchema = new Schema<ICourse>({
   isActive: {
     type: Boolean,
     default: true,
+  },
+  isPrivate: {
+    type: Boolean,
+    default: true,
+  },
+  isPublished: {
+    type: Boolean,
+    default: false,
   },
   isDeleted:{
     type: Boolean,

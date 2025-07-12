@@ -11,10 +11,10 @@ router.post('/create-course', requireAuth ,validateRequest(courseValidation.crea
 // get all course
 router.get('/view-all-courses', courseController.getAllCourses);
 // get a single course
-router.get('/view-single-course/:courseId', requireAuth,courseController.getSingleCourse);
+router.get('/view-single-course/:courseId', requireAuth, courseController.getSingleCourse);
 // update a course
 router.patch('/update-course/:courseId', requireAuth, validateRequest(courseValidation.updateCourseValidationSchema) ,courseController.updateCourse);//admin
 // delete a course
 router.delete('/delete-course/:courseId',requireAuth, courseController.deleteCourse);
 
-export const authRoutes = router;
+export const CourseRoutes = router;

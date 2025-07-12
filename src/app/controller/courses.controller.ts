@@ -25,8 +25,8 @@ const getAllCourses = catchAsync(async (_req: Request, res: Response) => {
 });
 
 const getSingleCourse = catchAsync(async (req: Request, res: Response) => {
-  const courseId = req.query.courseId as string;
-  const result = await courseServices.getSingleCourseFromDb(courseId);
+  const {courseId} = req.params;
+  const result = await courseServices.getSingleCourseFromDb(courseId as string);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -36,7 +36,7 @@ const getSingleCourse = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateCourse = catchAsync(async (req: Request, res: Response) => {
-  const courseId = req.query.courseId as string;
+  const courseId = req.params.courseId as string;
   const updatedData = req.body;
   const result = await courseServices.updateCourseInDb(courseId, updatedData);
   sendResponse(res, {
@@ -48,7 +48,7 @@ const updateCourse = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteCourse = catchAsync(async (req: Request, res: Response) => {
-  const courseId = req.query.courseId as string;
+  const courseId = req.params.courseId as string;
   const result = await courseServices.deleteCourseFromDb(courseId);
   sendResponse(res, {
     statusCode: httpStatus.OK,

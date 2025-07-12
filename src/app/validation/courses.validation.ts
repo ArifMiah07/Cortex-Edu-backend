@@ -9,6 +9,8 @@ const createCourseValidationSchema = z.object({
   price: z.number().nonnegative({ message: "Price must be zero or positive" }),
   thumbnail: z.string().url({ message: "Thumbnail must be a valid URL" }),
   createdBy: z.string().regex(objectIdRegex, { message: "Invalid ObjectId format" }),
+  isPrivate: z.boolean().optional(),
+  isPublished: z.boolean().optional(),
   isActive: z.boolean().optional(),
   isDeleted: z.boolean().optional(),
 });
@@ -19,6 +21,8 @@ const updateCourseValidationSchema = z.object({
   price: z.number().nonnegative({ message: "Price must be zero or positive" }).optional(),
   thumbnail: z.string().url({ message: "Thumbnail must be a valid URL" }).optional(),
   createdBy: z.string().regex(objectIdRegex, { message: "Invalid ObjectId format" }).optional(),
+  isPrivate: z.boolean().optional(),
+  isPublished: z.boolean().optional(),
   isActive: z.boolean().optional(),
   isDeleted: z.boolean().optional(),
 });
