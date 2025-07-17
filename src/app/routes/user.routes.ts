@@ -8,7 +8,7 @@ const router = Router();
 
 // create user
 router.post(
-  '/users',
+  '/create-user',
   requireAuth,
   validateRequest(userValidation.createUserValidation),
   userControllers.createUser,
