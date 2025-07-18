@@ -63,13 +63,14 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
     config.JWT_SECRET!,
     { expiresIn: '1d' },
   );
+const { password: _removed, ...userWithoutPassword } = user.toObject();
 
-  sendResponse(res, {
-    statusCode: httpStatus.CREATED,
-    message: 'Login successful',
-    token,
-    data: user,
-  });
+sendResponse(res, {
+  statusCode: httpStatus.CREATED,
+  message: 'Login successful',
+  token,
+  data: userWithoutPassword,
+});
 });
 
 export const UserAuth = {

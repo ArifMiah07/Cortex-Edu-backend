@@ -26,6 +26,7 @@ This Doc Contains Api Endpoints and their uses
     - **single-course** : `/single-course`, **method**: `get`
     - **update-course** : `/update-course`, **method**: `patch`
     - **delete-course** : `/delete-course`, **method**: `delete`
+    - ***example***: `/api/v1/course/create-course`, `/api/v1/course/update-course/:courseId` 
 
 4. **Modules**: `modules`
 
