@@ -100,8 +100,30 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMe = catchAsync( async (req: Request, res: Response)=> {
+  const token = req.cookies.authToken;
+  if(!token){
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized!"
+    })
+  }
+  try {
+    const decode = jwt.verify(token, config.JWT_SECRET!) as any;//error is here
+    const user = await User.findById(decode._id).select("password");
+    res.status(200).json({
+      success: true,
+      data: user,
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(403).json({success: false, message: "Invalid token"})
+  }
+})
+
 export const UserAuth = {
   registerUser,
   loginUser,
   logoutUser,
+  getMe,
 };
