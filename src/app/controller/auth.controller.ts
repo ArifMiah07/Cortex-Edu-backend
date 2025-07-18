@@ -63,13 +63,26 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
     config.JWT_SECRET!,
     { expiresIn: '1d' },
   );
-const { password: _removed, ...userWithoutPassword } = user.toObject();
+  
+  res.cookie('authToken', token, {
+    httpOnly: true,
+    secure: config.NODE_ENV !== 'development',
+    sameSite: "strict",
+    maxAge: 24*60*60*1000, //1 day
+  })
+
+
+// const { password: _removed, ...userWithoutPassword } = user.toObject();
 
 sendResponse(res, {
   statusCode: httpStatus.CREATED,
   message: 'Login successful',
   token,
-  data: userWithoutPassword,
+  data: {
+    _id: user._id,
+    email: user.email,
+    role: user.role,
+  },
 });
 });
 
