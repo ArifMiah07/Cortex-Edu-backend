@@ -8,7 +8,7 @@ import sendResponse from '../utils/sendResponse';
 import httpStatus from 'http-status';
 
 // register user
-export const registerUser = catchAsync(async (req: Request, res: Response) => {
+const registerUser = catchAsync(async (req: Request, res: Response) => {
   const { userId, email, password, role } = req.body;
 
   const existingUser = await User.findOne({ email });
@@ -33,7 +33,7 @@ export const registerUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 // login user
-export const loginUser = catchAsync(async (req: Request, res: Response) => {
+const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -63,30 +63,44 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
     config.JWT_SECRET!,
     { expiresIn: '1d' },
   );
-  
+
   res.cookie('authToken', token, {
     httpOnly: true,
     secure: config.NODE_ENV !== 'development',
-    sameSite: "strict",
-    maxAge: 24*60*60*1000, //1 day
-  })
+    sameSite: 'strict',
+    maxAge: 24 * 60 * 60 * 1000, //1 day
+  });
 
+  // const { password: _removed, ...userWithoutPassword } = user.toObject();
 
-// const { password: _removed, ...userWithoutPassword } = user.toObject();
-
-sendResponse(res, {
-  statusCode: httpStatus.CREATED,
-  message: 'Login successful',
-  token,
-  data: {
-    _id: user._id,
-    email: user.email,
-    role: user.role,
-  },
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Login successful',
+    data: {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+    },
+  });
 });
+
+const logout = catchAsync(async (req: Request, res: Response) => {
+  res.clearCookie('authToken', {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: config.NODE_ENV !== 'development',
+  });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Logged out successfully",
+    data: null,
+  });
 });
 
 export const UserAuth = {
   registerUser,
   loginUser,
+  logout,
 };
