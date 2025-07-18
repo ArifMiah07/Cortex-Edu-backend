@@ -77,6 +77,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.CREATED,
     success: true,
     message: 'Login successful',
+    token: config.NODE_ENV === 'development' ? token : '',
     data: {
       _id: user._id,
       email: user.email,
@@ -85,7 +86,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const logout = catchAsync(async (req: Request, res: Response) => {
+const logoutUser = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie('authToken', {
     httpOnly: true,
     sameSite: 'strict',
@@ -102,5 +103,5 @@ const logout = catchAsync(async (req: Request, res: Response) => {
 export const UserAuth = {
   registerUser,
   loginUser,
-  logout,
+  logoutUser,
 };
